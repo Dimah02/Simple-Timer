@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Stop Watch</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <style>
+        * {
+            margin-top: 2%;
+            margin-bottom: 2%;
+        }
+
+        body {
+            margin-top: 10%;
+        }
+
+        div>button {
+            margin-left: 1%;
+            margin-right: 1%;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1>Dima's Stop Watch</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1><span id="hr"> 00 </span>:<span id="min"> 00 </span>:<span id="sec"> 00 </span>:<span id="count"> 00
+                    </span></h1>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col text-center ">
+                <button type="button" class="btn btn-primary  btn-lg" id="start">Start</button>
+                <button type="button" class="btn btn-primary btn-lg" id="stop">Stop</button>
+                <button type="button" class="btn btn-primary  btn-lg" id="reset">Reset</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const start = document.getElementById('start');
+        const stop = document.getElementById('stop');
+        const reset = document.getElementById('reset');
+        let timer = false;
+        let hour = 0;
+        let minute = 0;
+        let second = 0;
+        let count = 0;
+
+        start.addEventListener('click', () => {
+            timer = true;
+            stopWatch();
+        })
+        stop.addEventListener('click', () => {
+            timer = false;
+        })
+        reset.addEventListener('click', () => {
+            timer = false;
+            hour = 0;
+            minute = 0;
+            second = 0;
+            count = 0;
+            document.getElementById('hr').innerHTML = " 00 ";
+            document.getElementById('min').innerHTML = " 00 ";
+            document.getElementById('sec').innerHTML = " 00 ";
+            document.getElementById('count').innerHTML = " 00 ";
+        })
+        //I tooke it from geeksforgeeks
+        function stopWatch() {
+            if (timer) {
+                count++;
+
+                //87 because I want it to match my phone timer.
+                if (count == 87) {
+                    second++;
+                    count = 0;
+                }
+
+                if (second == 60) {
+                    minute++;
+                    second = 0;
+                }
+
+                if (minute == 60) {
+                    hour++;
+                    minute = 0;
+                    second = 0;
+                }
+
+                let hrString = hour;
+                let minString = minute;
+                let secString = second;
+                let countString = count;
+
+                if (hour < 10)
+                    hrString = " 0" + hrString + " ";
+
+                if (minute < 10)
+                    minString = " 0" + minString + " ";
+
+                if (second < 10)
+                    secString = " 0" + secString + " ";
+
+                if (count < 10)
+                    countString = " 0" + countString + " ";
+
+                document.getElementById('hr').innerHTML = hrString;
+                document.getElementById('min').innerHTML = minString;
+                document.getElementById('sec').innerHTML = secString;
+                document.getElementById('count').innerHTML = countString;
+                setTimeout(stopWatch, 10); //This is awesome
+            }
+        }
+        /*
+        //for later use
+        function startTime() {
+            const date = new Date();
+            console.log(date.toLocaleTimeString());
+            setTimeout(function () { startTime() }, 1000);
+        }
+        startTime();
+        */
+    </script>
+</body>
+
+</html>
